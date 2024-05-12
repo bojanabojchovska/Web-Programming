@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Movie Ticket Order page - Welcome and choose a Movie</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Movie Ticket Shop App</h1>
+</header>
+<main>
+    <h2>Choose movie:</h2>
+    <tr class="item" th:each="movie : ${movies}">
+        <td th:text="${movie.getTitle()}"></td>
+        <td th:text="${movie.getSummary()}"></td>
+        <td th:text="${movie.getRating()}"></td>
+
+        <td>
+
+                <form th:method="post" th:action="@{'/movies/{id}/delete' (id=${movie.getId()})}" >
+                    <button type="submit" class="delete-item">Delete</button>
+                </form>
+
+                <a th:href="@{'/movies/{id}/edit' (id=${movie.getId()})}" class="edit-item">Edit</a>
+
+                <form th:method="post" th:action="@{'/movies/{id}/rate' (id=${movie.getId()})}" >
+                    <button type="submit" class="like-item">Rate</button>
+                </form>
+
+        </td>
+    </tr>
+
+    <h2>Choose number of tickets:</h2>
+    <input type="number" name="numTickets" min="1" max="10"><br/>
+    <br/>
+    <input type="submit" value="Submit">
+</main>
+</body>
+</html>
