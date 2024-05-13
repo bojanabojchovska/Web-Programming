@@ -1,9 +1,6 @@
 package org.example.cinema.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 
@@ -19,12 +16,16 @@ public class Movie {
     private String summary;
     private double rating;
 
+    @ManyToOne
+    private Production production;
+
     public Movie() {
     }
 
-    public Movie(String title, String summary, double rating) {
+    public Movie(String title, String summary, double rating, Production production) {
         this.title = title;
         this.summary = summary;
         this.rating = rating;
+        this.production = production;
     }
 }

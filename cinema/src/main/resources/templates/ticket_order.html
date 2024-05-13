@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ordered Ticket - Confirmation</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<section class="container mt-4">
+    <header class="text-center mb-4">
+        <h1>Movie Order page - Order confirmation</h1>
+    </header>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th colspan="2">Your Order Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><b>Client Name</b></td>
+            <td>Petko Petkov</td>
+        </tr>
+        <tr>
+            <td><b>Client IP Address</b></td>
+            <td>127.0.0.1</td>
+        </tr>
+        <tr>
+            <td><b>Ticket for Movie</b></td>
+            <td th:text="${movie.getTitle()}">Oppenheimer</td>
+        </tr>
+        <tr>
+            <td><b>Number of tickets</b></td>
+            <td th:text="${numTickets}">2</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

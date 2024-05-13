@@ -56,6 +56,14 @@
         </tr>
     </table>
 
+    <div>
+
+        <a href="/movies/add" class="btn btn-primary add-item">
+            Add new movie
+        </a>
+
+    </div>
+
     <form id="orderForm" th:action="@{'/ticketOrder'}" th:method="GET">
         <!-- Hidden input to store selected movie ID -->
         <input type="hidden" id="selectedMovieId" name="selectedMovie" value="">
