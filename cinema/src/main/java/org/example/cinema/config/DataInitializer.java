@@ -14,12 +14,9 @@ public class DataInitializer {
 
     private final MovieService movieService;
 
-    private final TicketOrderService ticketOrderService;
 
-    public DataInitializer(MovieService movieService, TicketOrderService ticketOrderService) {
-
+    public DataInitializer(MovieService movieService) {
         this.movieService = movieService;
-        this.ticketOrderService = ticketOrderService;
     }
 
 

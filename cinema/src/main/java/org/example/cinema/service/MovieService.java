@@ -16,5 +16,7 @@ public interface MovieService {
 
     Movie findByTitle(String title);
 
+    List<Movie> listMoviesByTitleAndRating(String movieName, Double rating);
+
 
 }

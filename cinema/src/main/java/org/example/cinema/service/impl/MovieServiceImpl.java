@@ -6,6 +6,7 @@ import org.example.cinema.repository.MovieRepository;
 import org.example.cinema.service.MovieService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -46,5 +47,19 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie findByTitle(String title) {
         return movieRepository.findMovieByTitle(title);
+    }
+
+    @Override
+    public List<Movie> listMoviesByTitleAndRating(String movieName, Double rating) {
+        if(movieName!=null && rating!=null){
+            return movieRepository.findAllByTitleContainingIgnoreCaseAndRatingGreaterThan(movieName,rating);
+        }
+        else if(movieName!=null){
+            return movieRepository.findAllByTitleContainingIgnoreCase(movieName);
+        }
+        else if (rating!=null){
+            return movieRepository.findAllByRatingGreaterThan(rating);
+        }
+        return movieRepository.findAll();
     }
 }
