@@ -17,17 +17,16 @@ public class TicketOrder {
     @ManyToOne
     private Movie movie;
 
-    private String clientName;
-    private String clientAddress;
+
+    @ManyToOne
+    private User user;
     private Integer numberOfTickets;
 
     public TicketOrder() {
     }
 
-    public TicketOrder(Movie movie, String clientName, String clientAddress, int numberOfTickets) {
+    public TicketOrder(Movie movie, User user, int numberOfTickets) {
         this.movie = movie;
-        this.clientName = clientName;
-        this.clientAddress = clientAddress;
         this.numberOfTickets = numberOfTickets;
     }
 }

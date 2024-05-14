@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Movie Form</h1>
+    <!-- The form should submit to CandidatesController.create or CandidatesController.update,
+         depending on whether we are creating or editing a candidate -->
+    <form th:method="post" th:action="@{ ${movie!=null} ? '/movies/' + ${movie.getId()} : '/movies'}">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text"
+                   class="form-control"
+                   id="title"
+                   name="title"
+                   th:value="${movie?.getTitle()}"
+                   required>
+        </div>
+        <div class="form-group">
+            <label for="summary">Summary</label>
+            <input type="text"
+                   class="form-control"
+                   id="summary"
+                   name="summary"
+                   th:value="${movie?.getSummary()}"
+                   required>
+        </div>
+        <div class="form-group">
+            <label for="rating">Rating</label>
+            <input type="number"
+                   class="form-control"
+                   id="rating"
+                   name="rating"
+                   th:value="${movie?.getRating()}"
+                   required>
+        </div>
+        <div>
+            <label>Production</label><br/>
+            <select id="party" name="production" multiple="multiple" size="5">
+                <!-- For each party you should have one <option> like below  -->
+                <option th:each="prod:${productions}"
+                        th:value="${prod.getId()}"
+                        th:text="${prod.name}"
+                        th:selected="${movie?.production?.id?.equals(prod.getId())}" value="[party.id]"> [party.name]</option>
+            </select>
+        </div>
+
+        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+        <a id="back" href="/movies" class="btn btn-secondary">Back to movies</a>
+    </form>
+</div>
+
+<div>
+    <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
