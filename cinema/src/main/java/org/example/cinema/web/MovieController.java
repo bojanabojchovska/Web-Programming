@@ -1,8 +1,10 @@
 package org.example.cinema.web;
 
 import org.example.cinema.model.Movie;
+import org.example.cinema.model.UserType;
 import org.example.cinema.service.MovieService;
 import org.example.cinema.service.ProductionService;
+import org.example.cinema.service.UserService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +28,7 @@ public class MovieController {
     }
 
 
-    @GetMapping({"/", "/movies"})
+    @GetMapping("/movies")
     public String showMovies(@RequestParam(required = false) String movieName,
                              @RequestParam(required = false) Double rating,
                              Model model) {
@@ -76,6 +78,19 @@ public class MovieController {
     @PostMapping("/movies/{id}/delete")
     public String delete(@PathVariable Long id) {
         this.movieService.delete(id);
+        return "redirect:/movies";
+    }
+
+
+
+    @GetMapping("/login")
+    public String showLogin() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String username,
+                        @RequestParam String password) {
         return "redirect:/movies";
     }
 }
