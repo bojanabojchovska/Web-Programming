@@ -12,8 +12,8 @@ public interface MovieService {
 
     Movie findById(Long id);
 
-    Movie create(String title, String summary, double rating, Long prodId);
-    Movie update(Long id, String title, String summary, double rating, Long prodId);
+    Movie create(String title, String summary, Double rating, Long prodId);
+    Movie update(Long id, String title, String summary, Double rating, Long prodId);
     Movie delete(Long id);
 
     Movie findByTitle(String title);

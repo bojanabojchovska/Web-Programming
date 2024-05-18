@@ -29,6 +29,7 @@ public class User implements UserDetails {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private UserType userType;
 
     private boolean isAccountNonExpired = true;

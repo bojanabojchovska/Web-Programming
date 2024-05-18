@@ -38,13 +38,13 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie create(String title, String summary, double rating, Long prodId) {
+    public Movie create(String title, String summary, Double rating, Long prodId) {
         Production production = productionRepository.findById(prodId).orElseThrow(InvalidProductionIdException::new);
         return movieRepository.save(new Movie(title,summary,rating, production));
     }
 
     @Override
-    public Movie update(Long id, String title, String summary, double rating, Long prodId) {
+    public Movie update(Long id, String title, String summary, Double rating, Long prodId) {
         Movie movie = this.findById(id);
 
         movie.setTitle(title);

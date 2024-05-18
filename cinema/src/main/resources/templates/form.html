@@ -1,70 +1,61 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+<section class="jumbotron text-center" xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <h1 class="jumbotron-heading">Your favorite cinema</h1>
+    </div>
+</section>
+<!-- The form should submit to EmployeeController.create or EmployeeController.update,
+     depending on whether we are creating or editing an entity -->
 <div class="container">
-    <h1>Movie Form</h1>
-    <!-- The form should submit to CandidatesController.create or CandidatesController.update,
-         depending on whether we are creating or editing a candidate -->
-    <form th:method="post" th:action="@{ ${movie!=null} ? '/movies/' + ${movie.getId()} : '/movies'}">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text"
-                   class="form-control"
-                   id="title"
-                   name="title"
-                   th:value="${movie?.getTitle()}"
-                   required>
-        </div>
-        <div class="form-group">
-            <label for="summary">Summary</label>
-            <input type="text"
-                   class="form-control"
-                   id="summary"
-                   name="summary"
-                   th:value="${movie?.getSummary()}"
-                   required>
-        </div>
-        <div class="form-group">
-            <label for="rating">Rating</label>
-            <input type="number"
-                   class="form-control"
-                   id="rating"
-                   name="rating"
-                   th:value="${movie?.getRating()}"
-                   required>
-        </div>
-        <div>
-            <label>Production</label><br/>
-            <select id="party" name="production" multiple="multiple" size="5">
-                <!-- For each party you should have one <option> like below  -->
-                <option th:each="prod:${productions}"
-                        th:value="${prod.getId()}"
-                        th:text="${prod.name}"
-                        th:selected="${movie?.production?.id?.equals(prod.getId())}" value="[party.id]"> [party.name]</option>
-            </select>
-        </div>
+    <div class="row">
+        <div class="col-md-5">
+            <form th:method="post" th:action="@{ ${movie!=null} ? '/movies/' + ${movie.getId()} : '/movies'}">
+                <div class="form-group">
+                    <label for="title">Movie</label>
+                    <input type="text"
+                           id="title"
+                           class="form-control"
+                           name="title"
+                           th:value="${movie?.title}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="summary">Summary</label>
+                    <!-- Do not set the value here -->
+                    <input type="text"
+                           id="summary"
+                           name="summary"
+                           class="form-control"
+                           th:value="${movie?.getSummary()}"
+                           required>
+                </div>
 
-        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-        <a id="back" href="/movies" class="btn btn-secondary">Back to movies</a>
-    </form>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <!-- Do not set the value here -->
+                    <input type="number"
+                           step="0.1"
+                           id="rating"
+                           name="rating"
+                           class="form-control"
+                           th:value="${movie?.rating}"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="production">Production</label>
+                    <select id="production" name="production" class="form-control">
+                        <!-- For each type you should have one <option> like below  -->
+                        <option th:each="prod : ${productions}"
+                                th:text="${prod.getName()}"
+                                th:value="${prod.getId()}"
+                                th:selected="${movie?.getProduction()?.getName()?.equals(prod.getName())}"></option>
+                    </select>
+                </div>
+
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                <a type="button" class="btn btn-secondary" href="/movies">Back</a>
+            </form>
+        </div>
+    </div>
 </div>
 
-<div>
-    <ul id="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/logout">Logout</a></li>
-    </ul>
-</div>
-
-<!-- Bootstrap JS (optional) -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>

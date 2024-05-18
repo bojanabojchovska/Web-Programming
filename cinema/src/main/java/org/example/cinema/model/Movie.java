@@ -14,7 +14,7 @@ public class Movie {
 
     private String title;
     private String summary;
-    private double rating;
+    private Double rating;
 
     @ManyToOne
     private Production production;
@@ -22,7 +22,7 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String title, String summary, double rating, Production production) {
+    public Movie(String title, String summary, Double rating, Production production) {
         this.title = title;
         this.summary = summary;
         this.rating = rating;

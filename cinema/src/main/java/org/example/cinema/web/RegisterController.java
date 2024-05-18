@@ -34,7 +34,7 @@ public class RegisterController {
         return "master";
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public String userRegister(@RequestParam String username,
                                @RequestParam String password,
                                @RequestParam String repeatedPassword,
