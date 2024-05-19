@@ -1,4 +1,4 @@
-<header xmlns:th="http://www.thymeleaf.org">
+<header xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-md navbar-dark bg-danger">
         <div class="container">
             <a class="navbar-brand" href="/">Your favorite cinema</a>
@@ -11,6 +11,11 @@
                 <ul class="navbar-nav m-auto">
                     <li class="nav-item m-auto">
                         <a class="nav-link active" href="/movies">Movies</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav m-auto">
+                    <li class="nav-item m-auto">
+                        <a class="nav-link active" href="/productions">Productions</a>
                     </li>
                 </ul>
 
@@ -32,9 +37,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#"></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-success btn-sm ml-3" href="/shopping-cart">
-                            <i class="fa fa-shopping-cart"></i> My cart
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_REGULAR')">
+                        <a class="btn btn-success btn-sm ml-3" href="/ticketOrder">
+                            <i class="fa fa-shopping-cart"></i> My tickets
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">

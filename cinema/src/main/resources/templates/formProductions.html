@@ -1,0 +1,46 @@
+<section class="jumbotron text-center" xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <h1 class="jumbotron-heading">Your favorite cinema</h1>
+    </div>
+</section>
+<!-- The form should submit to EmployeeController.create or EmployeeController.update,
+     depending on whether we are creating or editing an entity -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form th:method="post" th:action="@{'/productions'}">
+                <div class="form-group">
+                    <label for="name">Production</label>
+                    <input type="text"
+                           id="name"
+                           class="form-control"
+                           name="name"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <!-- Do not set the value here -->
+                    <input type="text"
+                           id="country"
+                           name="country"
+                           class="form-control"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <!-- Do not set the value here -->
+                    <input type="text"
+                           id="address"
+                           name="address"
+                           class="form-control"
+                           required>
+                </div>
+
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                <a type="button" class="btn btn-secondary" href="/productions">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+

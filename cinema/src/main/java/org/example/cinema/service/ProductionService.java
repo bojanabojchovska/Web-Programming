@@ -13,4 +13,7 @@ public interface ProductionService {
     Optional<Production> findById(Long id);
 
     Production create(String name, String country, String address);
+
+    Production update(Long id, String name, String country, String address);
+    Production delete(Long id);
 }

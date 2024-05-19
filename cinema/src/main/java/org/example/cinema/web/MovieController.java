@@ -29,7 +29,7 @@ public class MovieController {
 
 
     @GetMapping
-    public String getProductPage(@RequestParam(required = false) String error, Model model) {
+    public String getMoviePage(@RequestParam(required = false) String error, Model model) {
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
@@ -50,11 +50,13 @@ public class MovieController {
         return "master";
     }
 
-    @GetMapping("/movies/{id}/edit")
+    @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showEdit(@PathVariable Long id, Model model) {
         model.addAttribute("movie", this.movieService.findById(id));
         model.addAttribute("productions", productionService.findAll());
-        return "form";
+        model.addAttribute("bodyContent", "form");
+        return "master";
     }
 
     @PostMapping
@@ -67,7 +69,8 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    @PostMapping("/movies/{id}")
+    @PostMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String update(@PathVariable Long id,
                          @RequestParam String title,
                          @RequestParam String summary,
@@ -77,7 +80,8 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    @PostMapping("/movies/{id}/delete")
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable Long id) {
         this.movieService.delete(id);
         return "redirect:/movies";

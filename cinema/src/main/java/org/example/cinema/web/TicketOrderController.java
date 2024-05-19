@@ -10,11 +10,14 @@ import org.example.cinema.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/ticketOrder")
 public class TicketOrderController {
 
     private final TicketOrderService ticketOrderService;
@@ -27,16 +30,13 @@ public class TicketOrderController {
         this.userService = userService;
     }
 
-    @GetMapping("/ticketOrder")
-    public String showTicketOrder(@RequestParam Integer numTickets,
-                                 @RequestParam Long selectedMovie, Model model) {
-
-        Movie movie = movieService.findById(selectedMovie);
-        ticketOrderService.placeOrder(movie.getTitle(),userService.listAllUsers().getFirst().getId(),numTickets);
-
-        model.addAttribute("movie", movie);
-        model.addAttribute("numTickets", numTickets);
-
-        return "ticket_order";
-    }
+//    @GetMapping("{id}")
+//    public String showTicketOrder(@PathVariable Long id,
+//                                  Model model) {
+//
+//        Movie movie = movieService.findById(id);
+//        ticketOrderService.placeOrder(movie.getTitle(),);
+//        model.addAttribute("movie", movie);
+//        return "ticket_order";
+//    }
 }

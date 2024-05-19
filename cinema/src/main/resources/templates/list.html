@@ -14,6 +14,7 @@
                         <thead>
                         <tr>
                             <th scope="col">Movie Title</th>
+                            <th scope="col">Summary</th>
                             <th scope="col">Production</th>
                             <th scope="col">Rating</th>
                             <th scope="col"></th>
@@ -24,6 +25,7 @@
                         <tbody>
                         <tr th:each="movie : ${movies}" class="product">
                             <td th:text="${movie.title}"></td>
+                            <td th:text="${movie.summary}"></td>
                             <td th:text="${movie.production.name}"></td>
                             <td th:text="${movie.rating}"></td>
 
@@ -47,10 +49,10 @@
                                 </th:block>
                             </td>
                             <td>
-                                <form th:action="@{'/shopping-cart/add-product/{id}' (id=${movie.getId()})}"
-                                      th:method="POST">
+                                <form th:action="@{'/ticketOrder/{id}' (id=${movie.getId()})}"
+                                      th:method="POST" sec:authorize="hasRole('ROLE_REGULAR')">
                                     <button type="submit" class="btn btn-sm btn-success add-to-cart">
-                                        <i class="fas fa-shopping-cart"></i> Add to cart
+                                        <i class="fas fa-shopping-cart"></i> Buy ticket
                                     </button>
                                 </form>
                             </td>
@@ -61,7 +63,7 @@
             </div>
             <div class="col mb-3">
                 <div class="row">
-                    <div class="col-sm-12 col-md-12">
+                    <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a href="/movies/add" class="btn btn-block btn-dark add-product-btn">
                             Add new movie
                         </a>
