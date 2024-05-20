@@ -39,7 +39,7 @@ public class User implements UserDetails {
 
 
     @OneToMany
-    private List<ShoppingCart> carts;
+    private List<TicketCart> carts;
 
     public User(String username, String name, String surname, String password, UserType userType) {
         this.username = username;

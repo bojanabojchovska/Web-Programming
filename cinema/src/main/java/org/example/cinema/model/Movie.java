@@ -16,6 +16,7 @@ public class Movie {
     private String summary;
     private Double rating;
 
+
     @ManyToOne
     private Production production;
 

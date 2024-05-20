@@ -1,19 +1,30 @@
 package org.example.cinema.service;
 
 import org.example.cinema.model.Movie;
-import org.example.cinema.model.TicketOrder;
-import org.example.cinema.model.User;
+import org.example.cinema.model.TicketCart;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface TicketOrderService {
 
-    TicketOrder placeOrder(String movieTitle, Long user, int numberOfTickets);
+    TicketCart placeOrder(String username, Long movieId);
 
-    List<TicketOrder> listAllTicketOrders();
+    List<Movie> listAllMoviesInTicketCart(Long cartId);
+
+    TicketCart getActiveTicketCart(String username);
+
+    TicketCart addMovieToTicketCart(String username, Long movieId);
+
+    TicketCart deleteMovieFromTicketCart(String username, Long movieId);
+
+    List<TicketCart> findAll();
+
+    Long countSuccessfulOrders(String username);
+
+    TicketCart save(TicketCart ticketCart);
+    TicketCart findById(Long id);
 
 
-    TicketOrder findById(Long id);
-
-    TicketOrder delete(Long id);
 }

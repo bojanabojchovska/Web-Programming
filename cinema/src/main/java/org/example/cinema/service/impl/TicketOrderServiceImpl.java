@@ -2,53 +2,102 @@ package org.example.cinema.service.impl;
 
 
 import org.example.cinema.model.Movie;
-import org.example.cinema.model.TicketOrder;
+import org.example.cinema.model.TicketCart;
+import org.example.cinema.model.TicketOrderStatus;
 import org.example.cinema.model.User;
-import org.example.cinema.model.exceptions.InvalidTicketOrderIdException;
+import org.example.cinema.model.exceptions.InvalidMovieIdException;
+import org.example.cinema.model.exceptions.InvalidTicketCartIdException;
+import org.example.cinema.model.exceptions.MovieAlreadyInTicketCartException;
 import org.example.cinema.repository.MovieRepository;
-import org.example.cinema.repository.TicketOrderRepository;
-import org.example.cinema.repository.UserRepository;
+import org.example.cinema.repository.TicketCartRepository;
 import org.example.cinema.service.TicketOrderService;
 import org.example.cinema.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketOrderServiceImpl implements TicketOrderService {
 
-    private final TicketOrderRepository ticketOrderRepository;
+    private final TicketCartRepository ticketCartRepository;
     private final MovieRepository movieRepository;
 
     private final UserService userService;
 
-    public TicketOrderServiceImpl(TicketOrderRepository ticketOrderRepository, MovieRepository movieRepository, UserService userService) {
-        this.ticketOrderRepository = ticketOrderRepository;
+    public TicketOrderServiceImpl(TicketCartRepository ticketCartRepository, MovieRepository movieRepository, UserService userService) {
+        this.ticketCartRepository = ticketCartRepository;
         this.movieRepository = movieRepository;
         this.userService = userService;
     }
 
     @Override
-    public TicketOrder placeOrder(String movieTitle, Long user, int numberOfTickets) {
-        Movie movie = movieRepository.findMovieByTitle(movieTitle);
-        User user1 = userService.findById(user);
-        return ticketOrderRepository.save(new TicketOrder(movie,user1,numberOfTickets));
+    public TicketCart placeOrder(String username, Long movieId) {
+        return null;
     }
 
     @Override
-    public List<TicketOrder> listAllTicketOrders() {
-        return ticketOrderRepository.findAll();
+    public List<Movie> listAllMoviesInTicketCart(Long cartId) {
+        TicketCart ticketCart = this.findById(cartId);
+        return ticketCart.getMovies();
     }
 
     @Override
-    public TicketOrder findById(Long id) {
-        return ticketOrderRepository.findById(id).orElseThrow(InvalidTicketOrderIdException::new);
+    public TicketCart getActiveTicketCart(String username) {
+        return this.ticketCartRepository
+                .findTicketCartByUserUsernameAndStatus(username, TicketOrderStatus.CREATED)
+                .orElseGet(() -> {
+                    User user = this.userService.findByUsername(username);
+                    TicketCart ticketCart = new TicketCart(user);
+                    return this.ticketCartRepository.save(ticketCart);
+                });
     }
 
     @Override
-    public TicketOrder delete(Long id) {
-        TicketOrder ticketOrder = this.findById(id);
-        ticketOrderRepository.delete(ticketOrder);
-        return ticketOrder;
+    public TicketCart addMovieToTicketCart(String username, Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(InvalidMovieIdException::new);
+        TicketCart ticketCart = this.getActiveTicketCart(username);
+
+        List<Movie> moviesInTicketCart = ticketCart.getMovies().stream()
+                .filter(i -> i.getId().equals(movieId))
+                .collect(Collectors.toList());
+
+        if (moviesInTicketCart.size()>0){
+            throw new MovieAlreadyInTicketCartException(movieId,username);
+        }
+
+        ticketCart.getMovies().add(movie);
+        return this.ticketCartRepository.save(ticketCart);
+    }
+
+    @Override
+    public TicketCart deleteMovieFromTicketCart(String username, Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(InvalidMovieIdException::new);
+        TicketCart ticketCart = this.getActiveTicketCart(username);
+        ticketCart.getMovies().remove(movie);
+        return this.ticketCartRepository.save(ticketCart);
+    }
+
+    @Override
+    public List<TicketCart> findAll() {
+        return this.ticketCartRepository.findAll();
+    }
+
+    @Override
+    public Long countSuccessfulOrders(String username) {
+        return null;
+    }
+
+    @Override
+    public TicketCart save(TicketCart ticketCart) {
+        return this.ticketCartRepository.save(ticketCart);
+    }
+
+    @Override
+    public TicketCart findById(Long id) {
+        return ticketCartRepository.findById(id).orElseThrow(InvalidTicketCartIdException::new);
     }
 }
+

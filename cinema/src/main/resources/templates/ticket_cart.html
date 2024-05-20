@@ -1,0 +1,46 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
+            <h3 class="jumbotron-heading">All tickets for movies</h3>
+        </div>
+    </section>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12" th:if="${movies.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Movie</th>
+                            <th scope="col">Summary</th>
+                            <th scope="col">Production</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="movie : ${movies}">
+                            <td th:text="${movie.getTitle()}"></td>
+                            <td th:text="${movie.getSummary()}"></td>
+                            <td th:text="${movie.getProduction().name}"></td>
+                            <td class="text-right">
+                                <th:block sec:authorize="hasRole('ROLE_REGULAR')">
+                                    <form th:action="@{'/ticketCart/delete/{id}' (id=${movie.getId()})}"
+                                          th:method="DELETE">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger delete-product">
+                                            <i class="fas fa-trash-alt"></i> Remove from cart
+                                        </button>
+                                    </form>
+                                </th:block>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

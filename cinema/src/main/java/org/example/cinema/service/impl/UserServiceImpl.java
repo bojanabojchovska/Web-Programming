@@ -1,7 +1,6 @@
 package org.example.cinema.service.impl;
 
 
-import org.example.cinema.model.ShoppingCart;
 import org.example.cinema.model.User;
 import org.example.cinema.model.UserType;
 import org.example.cinema.model.exceptions.InvalidUserIdException;
@@ -65,30 +64,9 @@ public class UserServiceImpl implements UserService , UserDetailsService {
         return userRepository.save(user);
     }
 
-
     @Override
-    public User update(Long id, String username, String name, String surname, String password, List<ShoppingCart> carts) {
-        User user = this.findById(id);
-
-        user.setUsername(username);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setPassword(password);
-        user.setCarts(carts);
-
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User delete(Long id) {
-        User user = this.findById(id);
-        userRepository.delete(user);
-        return user;
-    }
-
-    @Override
-    public User login(String username, String password) {
-        return null;
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException(username));
     }
 
     @Override
