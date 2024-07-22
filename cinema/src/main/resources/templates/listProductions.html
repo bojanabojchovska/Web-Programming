@@ -26,6 +26,26 @@
                             <td th:text="${prod.name}"></td>
                             <td th:text="${prod.country}"></td>
                             <td th:text="${prod.address}"></td>
+                            <td>
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <form th:action="@{'/productions/delete/{id}' (id=${prod.getId()})}"
+                                          th:method="DELETE">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger delete-product">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </button>
+                                    </form>
+                                </th:block>
+                            </td>
+                            <td>
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a th:href="@{'/productions/edit/{id}' (id=${prod.getId()})}"
+                                       class="btn btn-sm btn-info edit-product">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                </th:block>
+                            </td>
+                            <td></td> <!-- Empty cell for non-admins -->
                         </tr>
                         </tbody>
                     </table>
@@ -43,4 +63,3 @@
         </div>
     </div>
 </div>
-
